@@ -1,0 +1,40 @@
+from pygame import mixer
+from tkinter import Tk
+from tkinter import Label
+from tkinter import Button
+from tkinter import filedialog
+
+current_volume = float(0.5)
+
+def play_song():
+    filename = filedialog.askopenfilename(initialdir='C:/',title='Please')
+    current_song = filename
+    song_title = filename.split('/')
+    song_title = song_title[-1]
+
+    mixer.init()
+    mixer.music.load(current_song)
+    mixer.music.set_volume(current_volume)
+    mixer.music.play()
+
+def pause():
+    mixer.music.pause()
+def resume():
+    mixer.music.unpause()
+
+window = Tk()
+window.title("music")
+
+Label(window,text='плеер',font=('Calibri',15),fg='red').grid(sticky='N',row=0,padx=120)
+Label(window,text='Звук',font=('Calibri',12),fg='blue').grid(sticky='N',row=4)
+song_label = Label(window,font=('Calibri',12))
+song_label.grid(stick='N',row=3)
+volume_label = Label(window,font=('Calibri',12))
+volume_label.grid(sticky='N',row=5)
+
+Button(window,text='Выбезите песню',font=('Calibri',12),command = play_song).grid(sticky='N',row=2)
+Button(window,text='Пауза',font=('Calibri',12),command=pause).grid(row=3,sticky="E")
+Button(window,text='Продолжить',font=('Calibri',12),command=resume).grid(row=3,sticky="W")
+Button(window,text='-',font=('Calibri',12),width=5).grid(row=5,sticky="W")
+Button(window,text='+',font=('Calibri',12),width=5).grid(row=5,sticky="E")
+window.mainloop()
